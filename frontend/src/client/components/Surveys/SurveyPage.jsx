@@ -1,51 +1,50 @@
-import React from 'react'
-import styles from './styles.module.css';
+import React, { useState } from 'react';
+import styles from './SurveyPage.module.css';
 import { PendingSurvey } from './PendingSurvey';
 import { CompletedSurvey } from './CompletedSurvey';
 import Header from "../Header/header";
 import Footer from "../FooterClient/Footer";
 
-function SurveyPage(){
+function SurveyPage() {
     return (
         <div className={styles.surveyContainer}>
             <Header />
             <SurveyMainPage />
             <Footer />
         </div>
-    )
+    );
 }
 
-function SurveyMainPage () {
-    const [activeTab, setActiveTab] = useState('pending');
+function SurveyMainPage() {
+    const [activeTab, setActiveTab] = useState('pending'); // Removed duplicate state
 
-    return ( 
+    return (
         <section>
             <div className={styles.surveyMainPage}>
                 <div className={styles.buttonContainer}>
-                    <button 
+                    <button
                         role='tab'
                         aria-selected={activeTab === 'pending'}
                         className={`${styles.pendingButton} ${activeTab === 'pending' ? styles.activeTab : ''}`}
                         onClick={() => setActiveTab('pending')}
                     >
-                        Pending Survey
+                        Pending Surveys
                     </button>
-                    <button 
+                    <button
                         role='tab'
-                        aria-selected={activeTab === 'existing'}
-                        className={`${styles.pendingButton} ${activeTab === 'pending' ? styles.activeTab : ''}`}
-                        onClick={() => setActiveTab('existing')}
+                        aria-selected={activeTab === 'completed'}
+                        className={`${styles.completedButton} ${activeTab === 'completed' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('completed')}
                     >
-                        Completed Survey
+                        Completed Surveys
                     </button>
                 </div>
                 <div>
-                    {activeTab === 'pending' && <PendingSurvey />}
-                    {activeTab === 'completed' && <CompletedSurvey />} 
+                    {activeTab === 'pending' ? <PendingSurvey /> : <CompletedSurvey />}
                 </div>
             </div>
-        </section>  
-    )
+        </section>
+    );
 }
 
 export default SurveyPage;

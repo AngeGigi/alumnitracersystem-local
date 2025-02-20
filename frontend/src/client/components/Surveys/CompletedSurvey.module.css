@@ -1,0 +1,87 @@
+.searchInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.surveyContainer {
+    margin: 20px auto;
+}
+
+.surveyContainer h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #2c9f47;
+    font-weight: 900;
+}
+
+.surveyList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.surveyCard {
+    background: #f0f8f4;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.surveyCard:hover {
+    background: #2c9f47;
+    color: white;
+}
+
+.checkIcon {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c9f47;
+    margin-right: 10px;
+}
+
+.surveyTitle {
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.surveyTitle:hover {
+    color: white;
+}
+
+.surveyDate {
+    font-size: 14px;
+    color: #757575;
+}
+
+.surveyCard:hover .surveyDate {
+    color: white;
+}
+
+.viewButton {
+    background: #2c9f47;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.viewButton:hover {
+    background: #1e7535;
+}
+
+.noResults {
+    text-align: center;
+    font-size: 16px;
+    color: #757575;
+}

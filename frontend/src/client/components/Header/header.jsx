@@ -50,8 +50,8 @@ function Header() {
               </a>
             </li>
             <li className="nav-item">
-              <a onClick={() => navigate("/Survey")}
-                  className={`nav-link ${isActive("/Survey") ? "active" : ""}`}>
+              <a onClick={() => navigate("/SurveyPage")}
+                  className={`nav-link ${isActive("/SurveyPage") ? "active" : ""}`}>
                 SURVEYS
               </a>
             </li>

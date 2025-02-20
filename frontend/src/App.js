@@ -8,7 +8,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import FrontPage from '../src/client/components/Frontpage/frontpage';
 import CrossCheckSurveyForm from '../src/client/components/CrossCheck-Survey/CrossCheck-Survey';
 import Home from '../src/client/components/Home/home'
-import Survey from '../src/client/components/Survey/survey';
+import SurveyPage from '../src/client/components/Surveys/SurveyPage';
 import Events from '../src/client/components/Events/events';
 import JobPage from '../src/client/components/JobPage/jobpage';
 import JobPageGive from '../src/client/components/JobPageGive/jobpagegive';
@@ -32,7 +32,7 @@ function App() {
             <Route path="/Frontpage" element={<FrontPage />} />
             <Route path="/RegisterSurveyForm" element={<CrossCheckSurveyForm />} />
             <Route path="/Home" element={<Home />} />
-            <Route path="/Survey" element={<Survey />} />
+            <Route path="/SurveyPage" element={<SurveyPage />} />
             <Route path="/Events" element={<Events />} />
             <Route path="/JobPage" element={<JobPage />} />
             <Route path="/JobPageGive" element={<JobPageGive />} />

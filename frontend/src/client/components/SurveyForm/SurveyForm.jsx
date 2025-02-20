@@ -7,7 +7,6 @@ function SurveyForm() {
   return (
     <div>
       <Header />
-      <Sidebar />
       <SurveyFormPage />
     </div>
   );
