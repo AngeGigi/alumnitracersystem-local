@@ -25,7 +25,7 @@ export const CreateEvent = ({ onPost, onBack }) => {
       }
   
       try {
-        const response = await fetch("https://alumnitracersystem.onrender.com/event/create", {
+        const response = await fetch("https://localhost:5050/event/create", {
           method: "POST",
           body: formData, // Send as FormData
         });
