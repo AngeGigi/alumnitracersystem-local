@@ -19,7 +19,7 @@ const AdminRegister = () => {
 
   const handleSubmit = async (e) => {
     try {
-      const response = await fetch('https://alumnitracersystem.onrender.com/adminlog_reg/adminregister', {
+      const response = await fetch('https://localhost:5050/adminlog_reg/adminregister', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

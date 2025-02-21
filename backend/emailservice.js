@@ -45,7 +45,7 @@ export const sendArticleNotification = async (articleTitle, articleContent) => {
                     html: `
                         <h2>${articleTitle}</h2>
                         <p>${articleContent}</p>
-                        <p><a href="https://tupalumni.com">Read more</a></p>
+                        <p><a href="https://localhost:5050">Read more</a></p>
                     `,
                 };
 
@@ -93,7 +93,7 @@ export const sendArticleNotification = async (articleTitle, articleContent) => {
                                 <h2>${eventTitle}</h2>
                                 <p>${eventDetails}</p>
                                 <p><strong>Date:</strong> ${eventDate}</p>
-                                <p><a href="https://tupalumni.com">View Event Details</a></p>
+                                <p><a href="https://localhost:5050">View Event Details</a></p>
                             `,
                         };
         
