@@ -18,7 +18,7 @@ export default function OpportunityPending() {
 
       try {
         const response = await fetch(
-          "https://localhost:5050/jobs/jobpost?status=Pending",
+          "http://localhost:5050/jobs/jobpost?status=Pending",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ export default function OpportunityPending() {
 
     try {
       const response = await fetch(
-        `https://localhost:5050/jobs/${selectedOpportunity._id}/approve`,
+        `http://localhost:5050/jobs/${selectedOpportunity._id}/approve`,
         {
           method: "POST",
           headers: {
@@ -99,7 +99,7 @@ export default function OpportunityPending() {
 
     try {
       const response = await fetch(
-        `https://localhost:5050/jobs/${selectedOpportunity._id}/deny`,
+        `http://localhost:5050/jobs/${selectedOpportunity._id}/deny`,
         {
           method: "POST",
           headers: {

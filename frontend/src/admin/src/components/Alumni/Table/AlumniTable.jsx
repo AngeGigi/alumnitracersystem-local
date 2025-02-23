@@ -25,7 +25,7 @@ export function AlumniTable() {
 
         jwtDecode(token); // Validate token
 
-        const response = await axios.get('https://localhost:5050/api/alumni/all', {
+        const response = await axios.get('http://localhost:5050/api/alumni/all', {
           headers: { 'Authorization': `Bearer ${token}` },
         });
 
@@ -63,7 +63,7 @@ export function AlumniTable() {
       const token = localStorage.getItem('token');
       console.log('Fetching details for user ID:', userId);
 
-      const response = await axios.get(`https://localhost:5050/api/alumni/user/${userId}`, {
+      const response = await axios.get(`http://localhost:5050/api/alumni/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -185,7 +185,7 @@ export function AlumniTable() {
               <>
                 <div className={styles.studentProfile}>
                   <img
-                    src={studentDetails.profileImage || 'https://via.placeholder.com/150'}
+                    src={studentDetails.profileImage || 'http://via.placeholder.com/150'}
                     alt="Profile"
                     className={styles.profileImage}
                   />

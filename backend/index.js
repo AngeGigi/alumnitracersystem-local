@@ -20,7 +20,7 @@ const app = express();
 dotenv.config();
 
 // Middleware
-app.use(cors({ origin: ['https://localhost:5050', 'https://localhost:5050', 'https://localhost:3000']}));
+app.use(cors({ origin: ['http://localhost:5050', 'http://localhost:5050', 'http://localhost:3000']}));
 app.use(express.json());
 
 // Serve static files (uploaded images)
