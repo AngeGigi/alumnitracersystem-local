@@ -13,6 +13,7 @@ export function AlumniTable() {
   const [studentDetails, setStudentDetails] = useState(null);
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -195,10 +196,10 @@ export function AlumniTable() {
                         <strong>Degree:</strong> {studentDetails.personalInfo.degree || 'N/A'}
                       </div>
                       <div>
-                        <strong>College:</strong> {studentDetails.college || 'N/A'}
+                        <strong>College:</strong> {studentDetails.personalInfo.college || 'N/A'}
                       </div>
                       <div>
-                        <strong>Course:</strong> {studentDetails.course || 'N/A'}
+                        <strong>Course:</strong> {studentDetails.personalInfo.course || 'N/A'}
                       </div>
                       <div>
                         <strong>Graduation Year:</strong> {studentDetails.gradyear || 'N/A'}
