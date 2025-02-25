@@ -65,9 +65,9 @@ router.get('/all', authenticateToken, async (req, res) => {
         college: survey.personalInfo.college,
         course: survey.personalInfo.course,
         birthdate: survey.personalInfo.birthdate || 'N/A',
+        gradyear: survey.studentInfo.gradyear,
       },
       employmentInfo: survey.employmentInfo || {},
-      gradyear: survey.studentInfo.gradyear,
       submittedAt: survey.createdAt,
     }));
 
@@ -91,60 +91,50 @@ router.get('/all', authenticateToken, async (req, res) => {
 // Get details of a specific latestSurvey by userId
 router.get('/user/:userId', authenticateToken, async (req, res) => {
   try {
-    const { userId } = req.params; // Extract userId from params
+    const userId = req.params.userId;
 
-    // Validate ObjectId format
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: 'Invalid userId format.' });
+    // Fetch user's latest survey submission
+    const latestSurvey = await SurveySubmission.findOne(
+      { userId: userId },
+      {},
+      { sort: { 'createdAt': -1 } }
+    );
+
+    if (!latestSurvey) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'No survey data found' 
+      });
     }
-
-    const student = await Student.findById(userId).lean(); // Fetch graduation year and other student-specific fields
+    // Fetch user details from the Student collection
+    const student = await Student.findById(userId);
     if (!student) {
-      return res.status(404).json({ error: 'Student not found.' });
+      return res.status(404).json({
+        success: false,
+        message: 'User not found in Student collection'
+      });
     }
 
+    // Get all surveys for the completed surveys section
+    const allSurveys = await SurveySubmission.find({ userId: userId })
+      .sort({ createdAt: -1 });
 
-    // Fetch surveys associated with the given userId
-    const surveys = await SurveySubmission.find({ userId }).sort({ createdAt: -1 }).lean();
-
-    if (surveys.length === 0) {
-      return res.status(404).json({ error: 'No surveys found for the specified user.' });
-    }
-
-    // Get the latest survey for college and course information
-    const latestSurvey = surveys[0];
-    // Add console.log to debug
-    console.log('Employment Info:', latestSurvey.employmentInfo);
-
-    // Structure the response with fallback values 
-    //Modal
+    // Combine the data, using the latest survey for personal/employment info
     res.status(200).json({
       success: true,
       data: {
-        personalInfo: {
-          first_name: student.first_name || 'N/A',
-          last_name: latestSurvey.last_name || 'N/A',
-          middle_name: latestSurvey.middle_name || 'N/A',
-          birthdate: latestSurvey.birthdate || 'N/A',
-          address: latestSurvey.address || 'N/A', // Ensure this field is returned
-          contact_no: latestSurvey.contact_no || 'N/A', // Ensure this field is returned
-        },
-        email_address: student.email_address || 'N/A',
-        degree: latestSurvey.degree || 'N/A',
-        college: latestSurvey.college || 'N/A',
-        gradyear: student.gradyear || 'N/A',
-        course: latestSurvey.course || 'N/A',
-        employmentInfo: latestSurvey.employmentInfo || {},
-        surveys: surveys || [],
-      },
+        personalInfo: { ...latestSurvey.personalInfo,birthday: student.birthday}, // Add birthday from the Student collection,
+        employmentInfo:{ ...latestSurvey.employmentInfo},
+        degree: latestSurvey.degree,
+        course: latestSurvey.course,
+        college: latestSurvey.college,
+        gradyear: student.gradyear, // Assuming the field is named graduationYear in your model
+        surveys: allSurveys
+      }
     });
   } catch (error) {
-    console.error(`Error fetching latestSurvey details for userId ${req.params.userId}:`, error);
-    res.status(500).json({ error: 'Failed to fetch latestSurvey details.' });
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch profile', error: error.message });
   }
 });
-
-
-
-
 export default router;

@@ -16,7 +16,7 @@ export default function OpportunityList() {
             }
 
             try {
-                const response = await fetch("https://localhost:5050/jobs/jobpost?status=Published", {
+                const response = await fetch("http://localhost:5050/jobs/jobpost?status=Published", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
