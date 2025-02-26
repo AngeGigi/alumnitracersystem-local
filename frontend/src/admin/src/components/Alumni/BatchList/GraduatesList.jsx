@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import styles from './GraduatesList.module.css';
+import axios from "axios";
+
+const API_BASE_URL = "http://localhost:5050"; // Change this to your actual backend URL
+
 
 export function GraduatesList() {
   const [selectedBatch, setSelectedBatch] = useState(null);
@@ -14,7 +18,107 @@ export function GraduatesList() {
   const [newBatchYear, setNewBatchYear] = useState('');
   const [newBatchTitle, setNewBatchTitle] = useState('');
   const [isAddingBatch, setIsAddingBatch] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [graduates, setGraduates] = useState([]);
+  
+
+  useEffect(() => {
+    const fetchGraduates = async () => {
+      setIsLoading(true);
+      setError(null);
+  
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/graduates`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch graduates.");
+        }
+        const data = await response.json();
+        setGraduates(data);
+        console.log("Graduates fetched successfully:", data);
+      } catch (error) {
+        console.error("Error fetching graduates:", error);
+        setError("Failed to load graduates. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchGraduates();
+  }, []);
+  
+  // Updated Upload CSV to Backend with better error handling
+const handleUpload = async () => {
+  if (!uploadedFile) {
+    alert("Please select a file.");
+    return;
+  }
+
+  setIsLoading(true);
+  setError(null);
+
+  const formData = new FormData();
+  formData.append("csvFile", uploadedFile);
+  
+  console.log("Uploading file:", uploadedFile.name);
+
+  try {
+    // Using axios for better error details
+    const uploadResponse = await axios.post(
+      `${API_BASE_URL}/api/BatchList`, 
+      formData, 
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    console.log("Upload response:", uploadResponse.data);
+    alert(uploadResponse.data.message || "Upload successful");
+
+    // Fetch updated graduates list after upload
+    const refreshResponse = await fetch(`${API_BASE_URL}/api/graduates`);
+    if (!refreshResponse.ok) {
+      throw new Error(`Failed to fetch updated graduates: ${refreshResponse.status}`);
+    }
+
+    const graduatesData = await refreshResponse.json();
+    setGraduates(graduatesData);
+    setUploadedFile(null);
+    
+    // Filter graduates by the selected batch to update the display
+    const batchGraduates = graduatesData.filter(
+      grad => grad.year_graduated === selectedBatch
+    );
+    console.log(`Found ${batchGraduates.length} graduates for batch ${selectedBatch}`);
+    
+  } catch (error) {
+    console.error("Upload error details:", error);
+    let errorMessage = "Failed to upload file";
+    
+    if (error.response) {
+      // The server responded with an error status
+      console.error("Server error response:", error.response.data);
+      errorMessage = `Server error: ${error.response.data.error || error.response.status}`;
+      if (error.response.data.details) {
+        errorMessage += ` - ${error.response.data.details}`;
+      }
+    } else if (error.request) {
+      // The request was made but no response was received
+      errorMessage = "No response from server. Check your connection.";
+    } else {
+      // Something else caused the error
+      errorMessage = error.message;
+    }
+    
+    setError(errorMessage);
+    alert(`Upload failed: ${errorMessage}`);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const handleBatchClick = (batch) => {
     setSelectedBatch(batch);
@@ -170,30 +274,14 @@ export function GraduatesList() {
           
           <h2>BATCH {selectedBatch} GRADUATES</h2>
           
-          <form 
-            className={styles.importForm}
-            onSubmit={handleSaveBatchDetails}
-          >
+          <div className={styles.importForm}>
             <div className={styles.formGroup}>
-              <label htmlFor="title">Batch Title</label>
-              <input 
-                type="text" 
-                id="title" 
-                placeholder="Enter Batch Title" 
-                className={styles.inputField}
-                defaultValue={
-                  batches.find(b => b.year === selectedBatch)?.title || ''
-                }
-              />
-            </div>
-            
-            <div className={styles.formGroup}>
-              <label htmlFor="file">Import Excel File</label>
+              <label htmlFor="file">Import CSV File</label>
               <div className={styles.fileInputWrapper}>
                 <input
                   type="file"
                   id="file"
-                  accept=".xls,.xlsx"
+                  accept=".csv"
                   onChange={handleFileChange}
                   className={styles.fileInput}
                 />
@@ -204,67 +292,55 @@ export function GraduatesList() {
                   {uploadedFile ? uploadedFile.name : 'Choose File'}
                 </label>
               </div>
-            </div>
-            
-            <div className={styles.graduateListStats}>
-              <div className={styles.statItem}>
-                <span className={styles.statLabel}>Total Graduates:</span>
-                <span className={styles.statValue}>
-                  {batches.find(b => b.year === selectedBatch)?.graduates.length || 0}
-                </span>
-              </div>
-              <div className={styles.statItem}>
-                <span className={styles.statLabel}>Imported Date:</span>
-                <span className={styles.statValue}>
-                  {batches.find(b => b.year === selectedBatch)?.importedDate || 'Not Imported'}
-                </span>
-              </div>
-            </div>
-            
-            <div className={styles.formActions}>
-              <button 
-                type="button" 
-                className={styles.viewListButton}
-                disabled={!uploadedFile}
-              >
-                View Graduate List
-              </button>
-              <button 
-                type="submit" 
-                className={styles.saveButton}
-                disabled={!uploadedFile}
-              >
-                SAVE
+              <button onClick={handleUpload} disabled={!uploadedFile} className={styles.uploadButton}>
+                Upload
               </button>
             </div>
-          </form>
+          </div>
+          
+          <div className={styles.graduateListStats}>
+            <div className={styles.statItem}>
+              <span className={styles.statLabel}>Total Graduates:</span>
+              <span className={styles.statValue}>
+                {graduates.filter(grad => grad.year_graduated === selectedBatch).length}
+              </span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statLabel}>Imported Date:</span>
+              <span className={styles.statValue}>
+                {new Date().toLocaleDateString()}
+              </span>
+            </div>
+          </div>
 
           <div className={styles.uploadedList}>
             <h3>Uploaded Graduates</h3>
             <table className={styles.graduatesTable}>
               <thead>
                 <tr>
-                  <th>Student ID</th>
                   <th>Name</th>
-                  <th>Course</th>
-                  <th>Actions</th>
+                  <th>Contact</th>
+                  <th>College</th>
+                  <th>Program</th>
+                  <th>Year Graduated</th>
                 </tr>
               </thead>
               <tbody>
-                {uploadedFile ? (
-                  <tr>
-                    <td>{uploadedFile.name}</td>
-                    <td>Uploaded File</td>
-                    <td>{uploadedFile.type}</td>
-                    <td>
-                      <button onClick={() => setUploadedFile(null)}>
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
+                {graduates.filter(grad => grad.year_graduated === selectedBatch).length > 0 ? (
+                  graduates
+                    .filter(grad => grad.year_graduated === selectedBatch)
+                    .map((grad, index) => (
+                      <tr key={index}>
+                        <td>{grad.name}</td>
+                        <td>{grad.contact}</td>
+                        <td>{grad.college}</td>
+                        <td>{grad.program}</td>
+                        <td>{grad.year_graduated}</td>
+                      </tr>
+                    ))
                 ) : (
-                  <tr className={styles.emptyRow}>
-                    <td colSpan="4">No graduates uploaded yet</td>
+                  <tr>
+                    <td colSpan="5">No graduates uploaded yet</td>
                   </tr>
                 )}
               </tbody>
