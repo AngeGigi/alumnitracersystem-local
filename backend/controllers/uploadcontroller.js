@@ -43,7 +43,7 @@ export const uploadCSV = async (req, res) => {
             email: row.Email,
             college: row.College,
             program: row.Program,
-            year_graduated: parseInt(row.YearGraduated),
+            year_graduated: isNaN(parseInt(row.YearGraduated)) ? null : parseInt(row.YearGraduated),
           }));
           
           console.log("Mapped data:", graduatesData);
