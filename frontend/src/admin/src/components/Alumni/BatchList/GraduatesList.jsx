@@ -302,7 +302,7 @@ const handleUpload = async () => {
             <div className={styles.statItem}>
               <span className={styles.statLabel}>Total Graduates:</span>
               <span className={styles.statValue}>
-                {graduates.filter(grad => grad.year_graduated === selectedBatch).length}
+                {graduates.filter(grad => grad.gradYear === selectedBatch).length}
               </span>
             </div>
             <div className={styles.statItem}>
@@ -329,15 +329,20 @@ const handleUpload = async () => {
                 {graduates.filter(grad => grad.year_graduated === selectedBatch).length > 0 ? (
                   graduates
                     .filter(grad => grad.year_graduated === selectedBatch)
-                    .map((grad, index) => (
-                      <tr key={index}>
-                        <td>{grad.name}</td>
-                        <td>{grad.contact}</td>
-                        <td>{grad.college}</td>
-                        <td>{grad.program}</td>
-                        <td>{grad.year_graduated}</td>
-                      </tr>
-                    ))
+                    .map((grad, index) => {
+                      // Concatenate names and remove 'N/A' for middle name
+                      const fullName = `${grad.first_name} ${grad.second_name} ${grad.middle_name !== "N/A" ? grad.middle_name : ""}`.trim();
+                      
+                      return (
+                        <tr key={index}>
+                          <td>{fullName}</td> {/* Display concatenated name */}
+                          <td>{grad.contact}</td>
+                          <td>{grad.college}</td>
+                          <td>{grad.program}</td>
+                          <td>{grad.year_graduated}</td>
+                        </tr>
+                      );
+                    })
                 ) : (
                   <tr>
                     <td colSpan="5">No graduates uploaded yet</td>

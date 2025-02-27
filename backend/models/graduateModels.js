@@ -1,14 +1,11 @@
 import mongoose from "mongoose";
 
-const GraduateSchema = new mongoose.Schema({
-  name: String,
-  contact: String,
-  email: String,
-  college: String,
-  program: String,
-  year_graduated: Number,
+const GraduateListSchema = new mongoose.Schema({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  college: { type: String },
+  course: { type: String, required: true }, // ✅ Matches "Program" field in CSV
+  gradYear: { type: Number, required: true }, // ✅ Correct type (Number)
 });
 
-const Graduate = mongoose.model("Graduate", GraduateSchema);
-
-export default Graduate; // ✅ Ensure it's exported properly
+export default mongoose.model("Graduate", GraduateListSchema);
