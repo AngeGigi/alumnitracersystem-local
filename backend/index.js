@@ -4,6 +4,7 @@ import path from "path";
 import { connectToDatabase } from '../backend/db/connection.js';
 import records from './record.js';
 import surveyRoutes from './routes/surveyroutes.js'; 
+import dynamicSurveyRoutes from './routes/dynamicSurveyRoutes.js'
 import adminlogreg from './models/adminlog_reg.js';
 import eventRoutes from './models/event.js'
 import dotenv from 'dotenv';
@@ -38,6 +39,7 @@ app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
 // Routes
 app.use("/record", records); // Existing records routes
 app.use("/surveys", surveyRoutes); // Add survey routes
+app.use("/api/surveys", dynamicSurveyRoutes);
 app.use("/adminlog_reg", adminlogreg);
 app.use("/event", eventRoutes);
 app.use("/artcileroutes", articleRoutes);
