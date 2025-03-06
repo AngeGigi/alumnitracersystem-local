@@ -1,0 +1,121 @@
+.tracer2Container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+.backButton{
+    background-color: none;
+    color: Black;
+    text-transform: uppercase;
+    padding: 10px 15px;
+    border-color: #c31d3c;
+    border-radius: 20px;
+    border-width: 1px;
+}
+
+.backButton:hover {
+    background-color: #c31d3c;
+    color: white;
+}
+
+.addButton{
+    background-color: white;
+    color: rgb(49, 49, 49);
+    text-transform: uppercase;
+    padding: 5px 15px;
+    border-color: #c31d3c;
+    border-radius: 20px;
+    border-width: 1px;
+    margin-bottom: 20px;
+    font-size: 10px;
+}
+  /* Logo Section */
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    width: 80px;
+    height: auto;
+  }
+
+  .titleContainerEduc{
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .tracer2Container p{
+    margin-bottom: 0;
+  }
+  .title {
+    font-size: 1.8rem;
+    font-weight: semi-bold;
+    color: #c31d3c;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  
+  /* Section Title */
+  .sectionTitle {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  /* Table */
+  .tableContainer {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #c31d3c;
+    color: white;
+  }
+  
+  .table input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  /* Submit Button */
+  .submitButton {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .submitButton:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .table th, .table td {
+      font-size: 14px;
+    }
+  }
+  

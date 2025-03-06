@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./CreateSurvey.module.css";
-import { TracerSurvey2 } from "../TracerSurvey2/TracerSurvey2"; // Import TracerSurvey2 Component
+import { TracerSurvey2 } from "./TracerSurvey2"; // Import TracerSurvey2 Component
 
 export const CreateSurvey = ({ onBack }) => {
   const [title, setTitle] = useState("");
