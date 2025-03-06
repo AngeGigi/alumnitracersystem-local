@@ -35,28 +35,29 @@ export const SurveyTable = ({ onView }) => {
 
   return (
     <div className={styles.tableWrapper}>
-      <h2>Surveys</h2>
       {loading ? (
-        <p>Loading surveys...</p>
+        <p className={styles.loading}>Loading surveys...</p>
       ) : surveys.length === 0 ? (
-        <p>No surveys available.</p>
+        <p className={styles.noSurveys}>No surveys available.</p>
       ) : (
         <table className={styles.table}>
           <thead>
-            <tr>
-              <th>No.</th>
-              <th>Title</th>
-              <th>Date Created</th>
-              <th>Actions</th>
+            <tr className={styles.header}>
+              <th>NO.</th>
+              <th>TITLE</th>
+              <th>DATE CREATED</th>
+              <th>ACTIONS</th>
             </tr>
           </thead>
           <tbody>
             {surveys.map((survey, index) => (
-              <tr key={survey._id}>
-                <td>{index + 1}</td>
-                <td>{survey.title}</td>
-                <td>{new Date(survey.createdAt).toLocaleDateString()}</td>
-                <td>
+              <tr key={survey._id} className={styles.row}>
+                <td className={styles.cell}>{index + 1}</td>
+                <td className={`${styles.cell} ${styles.clickable}`} onClick={() => onView(survey._id)}>
+                  {survey.title}
+                </td>
+                <td className={styles.cell}>{new Date(survey.createdAt).toLocaleDateString()}</td>
+                <td className={styles.actionCell}>
                   <button className={styles.viewButton} onClick={() => onView(survey._id)}>View</button>
                   <button className={styles.deleteButton} onClick={() => handleDelete(survey._id)}>Delete</button>
                 </td>

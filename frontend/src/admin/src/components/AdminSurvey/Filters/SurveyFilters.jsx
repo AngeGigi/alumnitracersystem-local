@@ -82,7 +82,7 @@ export const SurveyFilters = () => {
               aria-label="Add new survey"
               onClick={handleAddSurvey}
             >
-              + Add Survey
+              + Create New Survey
             </button>
           </div>
 

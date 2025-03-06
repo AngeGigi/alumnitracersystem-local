@@ -1,5 +1,33 @@
 /* PendingSurvey.module.css */
 
+/* Container for Pending Surveys */
+.container {
+  width: 100%;
+  margin: auto;
+}
+
+/* Button Container */
+.buttonContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Navigate Button */
+.tracerSurveyButton {
+  background-color: #463557;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.tracerSurveyButton:hover {
+  background-color: #362642;
+}
+
 .tableContainer {
   margin-top: 20px;
   font-family: "Montserrat", sans-serif;
@@ -50,7 +78,6 @@
   padding: 5px 10px;
   font-size: 0.9rem;
   border: none;
-
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   margin: 0 5px;
