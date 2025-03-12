@@ -106,7 +106,7 @@ export default function CreateOpportunity({ onClose }) {
         <h2>Create Opportunity</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label htmlFor="jobTitle">Job Title</label>
+            <label className={styles.oppLabel} htmlFor="jobTitle">Job Title</label>
             <input
               type="text"
               id="jobTitle"
@@ -117,7 +117,7 @@ export default function CreateOpportunity({ onClose }) {
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="college">College</label>
+            <label className={styles.oppLabel} htmlFor="college">College</label>
             <select
               id="college"
               name="college"
@@ -133,7 +133,7 @@ export default function CreateOpportunity({ onClose }) {
             </select>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="course">Course</label>
+            <label className={styles.oppLabel} htmlFor="course">Course</label>
             <select
               id="course"
               name="course"
@@ -151,7 +151,7 @@ export default function CreateOpportunity({ onClose }) {
             </select>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="location">Location</label>
+            <label className={styles.oppLabel} htmlFor="location">Location</label>
             <input
               type="text"
               id="location"
@@ -162,7 +162,7 @@ export default function CreateOpportunity({ onClose }) {
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="jobDescription">Job Description</label>
+            <label className={styles.oppLabel} htmlFor="jobDescription">Job Description</label>
             <textarea
               id="jobDescription"
               name="jobDescription"
@@ -172,7 +172,7 @@ export default function CreateOpportunity({ onClose }) {
             ></textarea>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="keyResponsibilities">Key Responsibilities</label>
+            <label className={styles.oppLabel} htmlFor="keyResponsibilities">Key Responsibilities</label>
             <textarea
               id="keyResponsibilities"
               name="keyResponsibilities"
@@ -182,7 +182,7 @@ export default function CreateOpportunity({ onClose }) {
             ></textarea>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="requirements">Requirements</label>
+            <label className={styles.oppLabel} htmlFor="requirements">Requirements</label>
             <textarea
               id="requirements"
               name="requirements"
