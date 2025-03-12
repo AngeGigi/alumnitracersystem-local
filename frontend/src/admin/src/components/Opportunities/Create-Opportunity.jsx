@@ -64,7 +64,7 @@ export default function CreateOpportunity({ onClose }) {
   
       console.log("Submitting Form Data:", formData);
   
-      const response = await fetch("http://localhost:5050/jobs/create", {
+      const response = await fetch("http://alumnitracersystem.onrender.com/jobs/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -28,7 +28,7 @@ export function AlumniTable() {
 
         jwtDecode(token); // Validate token
 
-        const response = await axios.get('http://localhost:5050/api/alumni/all', {
+        const response = await axios.get('http://alumnitracersystem.onrender.com/api/alumni/all', {
           headers: { 'Authorization': `Bearer ${token}` },
         });
 
@@ -66,7 +66,7 @@ export function AlumniTable() {
       const token = localStorage.getItem('token');
       console.log('Fetching details for user ID:', userId);
 
-      const response = await axios.get(`http://localhost:5050/api/alumni/user/${userId}`, {
+      const response = await axios.get(`http://alumnitracersystem.onrender.com/api/alumni/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

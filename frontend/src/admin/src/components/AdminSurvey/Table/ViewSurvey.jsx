@@ -15,7 +15,7 @@ export const ViewSurvey = ({ surveyId, onBack }) => {
 
   const fetchSurvey = async () => {
     try {
-      const response = await axios.get(`http://localhost:5050/api/surveys/${surveyId}`);
+      const response = await axios.get(`http://alumnitracersystem.onrender.com/api/surveys/${surveyId}`);
       setSurvey(response.data);
     } catch (error) {
       console.error("Error fetching survey:", error);

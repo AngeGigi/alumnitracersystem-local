@@ -17,7 +17,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5050/adminlog_reg/adminlogin', {
+      const response = await fetch('http://alumnitracersystem.onrender.com/adminlog_reg/adminlogin', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

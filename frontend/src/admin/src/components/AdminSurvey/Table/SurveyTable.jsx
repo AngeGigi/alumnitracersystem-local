@@ -12,7 +12,7 @@ export const SurveyTable = ({ onView }) => {
 
   const fetchSurveys = async () => {
     try {
-      const response = await axios.get("http://localhost:5050/api/surveys");
+      const response = await axios.get("http://alumnitracersystem.onrender.com/api/surveys");
       setSurveys(response.data);
     } catch (error) {
       console.error("Error fetching surveys:", error);
@@ -25,7 +25,7 @@ export const SurveyTable = ({ onView }) => {
     if (!window.confirm("Are you sure you want to delete this survey?")) return;
 
     try {
-      await axios.delete(`http://localhost:5050/api/surveys/${surveyId}`);
+      await axios.delete(`http://alumnitracersystem.onrender.com/api/surveys/${surveyId}`);
       setSurveys(surveys.filter((survey) => survey._id !== surveyId));
     } catch (error) {
       console.error("Error deleting survey:", error);
