@@ -29,7 +29,7 @@ if (!fs.existsSync(batchListDir)) {
 }
 
 // Middleware
-app.use(cors({ origin: ['http://localhost:5050', 'http://localhost:5000', 'http://localhost:3000']}));
+app.use(cors({ origin: ['http://localhost:5050', 'http://localhost:5000', 'http://localhost:3000','https://tupalumni.com','https://admin.tupalumni.com']}));
 app.use(express.json());
 
 // Serve static files (uploaded images)
