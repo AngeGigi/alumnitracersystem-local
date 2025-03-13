@@ -1,141 +1,180 @@
 .createSurvey {
-    padding: 20px;
-    font-family: "Montserrat", sans-serif;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    max-width: 800px;
-    margin: 0 auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .title {
-    text-align: center;
-    text-transform: uppercase;
-    color: #c31d3c;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-  
-  .backButton {
-    background-color: #ccc;
-    color: #000;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  .backButton:hover {
-    background-color: #bbb;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .questionBox {
-    display: flex;
+  padding: 20px;
+  font-family: "Montserrat", sans-serif;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Button Row (Back & Tracer Survey Buttons) */
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+/* Back Button (20% Width) */
+.backButton {
+  flex: 0 0 20%;
+  color: gray;
+  border: none;
+  padding: 10px 0;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #8f263a;
+}
+
+/* Tracer Survey Button (80% Width) */
+.tracerSurveyButton {
+  flex: 0 0 80%;
+  background-color: #c31d3c;
+  color: white;
+  font-size: 14px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.tracerSurveyButton:hover {
+  background-color: #8f263a;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+/* Input Fields */
+.input, .questionInput, .selectType {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+/* Question Box */
+.questionBox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+/* Multiple Choice */
+.multipleChoice .option {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Add Option Button */
+.addOptionButton {
+  margin-top: 10px;
+  background-color: #c31d3c;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.addOptionButton:hover {
+  background-color: #8f263a;
+}
+
+/* General Button Styles */
+.addButton,
+.removeButton,
+.submitButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Add Question Button */
+.addButton {
+  background-color: #c31d3c;
+  color: #fff;
+}
+
+.addButton:hover {
+  background-color: #8f263a;
+}
+
+/* Remove Question Button */
+.removeButton {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+.removeButton:hover {
+  background-color: #d43a3a;
+}
+
+/* Submit Survey Button */
+.submitButton {
+  background-color: #28a745;
+  color: #fff;
+  margin-top: 20px;
+}
+
+.submitButton:hover {
+  background-color: #218838;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .buttonRow {
     flex-direction: column;
     gap: 10px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #fff;
   }
-  
-  .questionInput {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .selectType {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-  }
-  
-  .exampleField input,
-  .exampleField textarea {
+
+  .backButton, .tracerSurveyButton {
+    flex: none;
     width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    color: #666;
   }
   
-  .linearScale label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }x
-  
-  .multipleChoice .option {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  .input, .questionInput, .selectType {
+    font-size: 0.9rem;
   }
-  
-  .addOptionButton {
-    margin-top: 10px;
-    background-color: #c31d3c;
-    color: #fff;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+
+  .tracerSurveyButton {
+    font-size: 14px;
+    padding: 8px 16px;
   }
-  
-  .addOptionButton:hover {
-    background-color: #8f263a;
-  }
-  
-  .addButton,
-  .removeButton,
-  .submitButton {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .addButton {
-    background-color: #c31d3c;
-    color: #fff;
-  }
-  
-  .addButton:hover {
-    background-color: #8f263a;
-  }
-  
-  .removeButton {
-    background-color: #ff4d4d;
-    color: #fff;
-  }
-  
-  .removeButton:hover {
-    background-color: #d43a3a;
-  }
-  
-  .submitButton {
-    background-color: #28a745;
-    color: #fff;
-    margin-top: 20px;
-  }
-  
-  .submitButton:hover {
-    background-color: #218838;
-  }
-  
+}

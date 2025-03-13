@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import  {jwtDecode} from 'jwt-decode';
 import EmploymentHistory from './EmploymentHistory';
+import * as XLSX from 'xlsx';
+import html2canvas from 'html2canvas';
 
 export function AlumniTable() {
   const [alumniData, setAlumniData] = useState([]);
@@ -13,6 +15,7 @@ export function AlumniTable() {
   const [studentDetails, setStudentDetails] = useState(null);
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +28,7 @@ export function AlumniTable() {
 
         jwtDecode(token); // Validate token
 
-        const response = await axios.get('https://localhost:5050/api/alumni/all', {
+        const response = await axios.get('http://alumnitracersystem.onrender.com/api/alumni/all', {
           headers: { 'Authorization': `Bearer ${token}` },
         });
 
@@ -63,7 +66,7 @@ export function AlumniTable() {
       const token = localStorage.getItem('token');
       console.log('Fetching details for user ID:', userId);
 
-      const response = await axios.get(`https://localhost:5050/api/alumni/user/${userId}`, {
+      const response = await axios.get(`http://alumnitracersystem.onrender.com/api/alumni/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -96,6 +99,127 @@ export function AlumniTable() {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  };
+
+  const exportToExcelWithGraphs = async () => {
+    if (!studentDetails) {
+      alert("No student details available!");
+      return;
+    }
+  
+    const studentInfo = studentDetails.personalInfo;
+    const employment = studentDetails.employmentInfo;
+    const surveys = studentDetails.surveys || [];
+  
+    // **Capture Graphs as Images**
+    const timelineCanvas = await html2canvas(document.querySelector("canvas")); // Employment timeline graph
+    const alignmentCanvas = await html2canvas(document.querySelectorAll("canvas")[1]); // Course alignment graph
+  
+    // Convert canvases to Base64 images
+    const timelineImage = timelineCanvas.toDataURL("image/png");
+    const alignmentImage = alignmentCanvas.toDataURL("image/png");
+  
+    // **Create Personal & Employment Information Sheet**
+    const ws = XLSX.utils.json_to_sheet([
+      { Title: "Personal Information", Empty: "" },
+      { Key: "First Name", Value: studentInfo?.first_name || "N/A" },
+      { Key: "Last Name", Value: studentInfo?.last_name || "N/A" },
+      { Key: "Degree", Value: studentInfo?.degree || "N/A" },
+      { Key: "Course", Value: studentInfo?.course || "N/A" },
+      { Key: "Graduation Year", Value: studentDetails?.gradyear || "N/A" },
+      { Key: "Email", Value: studentInfo?.email_address || "N/A" },
+      { Title: "Employment History", Empty: "" },
+      { Key: "Company", Value: employment?.company_name || "N/A" },
+      { Key: "Position", Value: employment?.position || "N/A" },
+      { Key: "Job Status", Value: employment?.job_status || "N/A" },
+    ]);
+  
+    // **Create Submitted Surveys Sheet**
+    const surveySheet = XLSX.utils.json_to_sheet(
+      surveys.map((s, index) => ({
+        No: index + 1,
+        Title: s.title || "N/A",
+        "Date Received": s.date || "N/A",
+        "Date Submitted": s.createdAt || "N/A",
+      }))
+    );
+  
+    // **Create Workbook**
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Student Summary");
+    XLSX.utils.book_append_sheet(wb, surveySheet, "Submitted Surveys");
+  
+    // **Generate XLSX File with Data**
+    const wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
+    const blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
+  
+    // **Download File with Dynamic Name**
+    const fileName = `summary_${studentInfo?.first_name || 'Unknown'}_${studentInfo?.last_name || 'Student'}.xlsx`;
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+  
+    // **Add Graphs to Excel Using ExcelJS**
+    import("exceljs").then(async (ExcelJS) => {
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet("Student Summary");
+  
+      // **Insert Table Data**
+      worksheet.columns = [
+        { header: "Title", key: "Title", width: 25 },
+        { header: "Data", key: "Value", width: 50 },
+      ];
+  
+      [
+        { Title: "First Name", Value: studentInfo?.first_name || "N/A" },
+        { Title: "Last Name", Value: studentInfo?.last_name || "N/A" },
+        { Title: "Degree", Value: studentInfo?.degree || "N/A" },
+        { Title: "Course", Value: studentInfo?.course || "N/A" },
+        { Title: "Graduation Year", Value: studentDetails?.gradyear || "N/A" },
+        { Title: "Company", Value: employment?.company_name || "N/A" },
+        { Title: "Position", Value: employment?.position || "N/A" },
+      ].forEach((row) => worksheet.addRow(row));
+  
+      // **Add Employment Timeline Chart**
+      const imageTimeline = workbook.addImage({
+        base64: timelineImage.split(",")[1],
+        extension: "png",
+      });
+      worksheet.addImage(imageTimeline, {
+        tl: { col: 1, row: 10 },
+        ext: { width: 500, height: 300 },
+      });
+  
+      // **Add Course Alignment Chart**
+      const imageAlignment = workbook.addImage({
+        base64: alignmentImage.split(",")[1],
+        extension: "png",
+      });
+      worksheet.addImage(imageAlignment, {
+        tl: { col: 1, row: 20 },
+        ext: { width: 500, height: 300 },
+      });
+  
+      // **Save & Download the Excel File with Graphs**
+      const buffer = await workbook.xlsx.writeBuffer();
+      const finalBlob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+  
+      const finalLink = document.createElement("a");
+      finalLink.href = URL.createObjectURL(finalBlob);
+      finalLink.download = fileName;
+      finalLink.click();
+    });
+  };
+  
+  // **Helper function to convert string to ArrayBuffer**
+  const s2ab = (s) => {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+    return buf;
   };
 
 
@@ -185,7 +309,7 @@ export function AlumniTable() {
               <>
                 <div className={styles.studentProfile}>
                   <img
-                    src={studentDetails.profileImage || 'https://via.placeholder.com/150'}
+                    src={studentDetails.profileImage || 'http://via.placeholder.com/150'}
                     alt="Profile"
                     className={styles.profileImage}
                   />
@@ -195,10 +319,10 @@ export function AlumniTable() {
                         <strong>Degree:</strong> {studentDetails.personalInfo.degree || 'N/A'}
                       </div>
                       <div>
-                        <strong>College:</strong> {studentDetails.college || 'N/A'}
+                        <strong>College:</strong> {studentDetails.personalInfo.college || 'N/A'}
                       </div>
                       <div>
-                        <strong>Course:</strong> {studentDetails.course || 'N/A'}
+                        <strong>Course:</strong> {studentDetails.personalInfo.course || 'N/A'}
                       </div>
                       <div>
                         <strong>Graduation Year:</strong> {studentDetails.gradyear || 'N/A'}
@@ -255,7 +379,7 @@ export function AlumniTable() {
                       ))}
                     </tbody>
                   </table>
-                  <button className={styles.exportButton}>Export Summary</button>
+                  <button className={styles.exportButton} onClick={exportToExcelWithGraphs}>Export Summary</button>
                 </div>
               </>
             ) : (

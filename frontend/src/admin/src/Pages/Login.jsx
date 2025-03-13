@@ -17,7 +17,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://localhost:5050/adminlog_reg/adminlogin', {
+      const response = await fetch('http://alumnitracersystem.onrender.com/adminlog_reg/adminlogin', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export default function Login() {
       <div className={styles.adminLoginTitle}>
         <h3 className={styles.adminSystemTitle1}>TUPATS</h3>
         <h4 className={styles.adminSystemTitle2}>The Technological University of the Philippines Alumni Tracer System</h4>
-        <h5 className={styles.adminSystemTitle3}>ADMIN ACCESS</h5>
+        <h5 className={styles.adminSystemTitle3}>ADMIN RECESS</h5>
       </div>
 
       <div className={styles.adminLoginContainer}>

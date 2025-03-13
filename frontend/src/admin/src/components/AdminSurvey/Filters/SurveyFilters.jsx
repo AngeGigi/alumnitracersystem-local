@@ -4,13 +4,15 @@ import SidebarLayout from "../../SideBar/SideBarLayout";
 import { SurveyTable } from '../Table/SurveyTable';
 import { PendingSurvey } from '../Table/PendingSurvey';
 import { CreateSurvey } from '../CreateSurvey/CreateSurvey';
+import { ViewSurvey } from "../Table/ViewSurvey";
 
 export const SurveyFilters = () => {
   const [activeTab, setActiveTab] = useState('existing');
   const [activeFilter, setActiveFilter] = useState(null);
   const [college, setCollege] = useState('');
   const [year, setYear] = useState('');
-  const [isCreatingSurvey, setIsCreatingSurvey] = useState(false); // Track whether "Create Survey" is active
+  const [isCreatingSurvey, setIsCreatingSurvey] = useState(false);
+  const [viewSurveyId, setViewSurveyId] = useState(null);
 
   const coursesByCollege = {
     COE: ["BSCE", "BSEE", "BSME"],
@@ -56,20 +58,22 @@ export const SurveyFilters = () => {
   };
 
   const handleAddSurvey = () => {
-    setIsCreatingSurvey(true); // Show the "Create Survey" form
+    setIsCreatingSurvey(true);
+    setViewSurveyId(null);
   };
 
   const handleBackToSurveyFilters = () => {
-    setIsCreatingSurvey(false); // Go back to the filters
+    setIsCreatingSurvey(false);
+    setViewSurveyId(null);
   };
 
   return (
     <SidebarLayout>
       {isCreatingSurvey ? (
-        // Show the CreateSurvey form
         <CreateSurvey onBack={handleBackToSurveyFilters} />
+      ) : viewSurveyId ? (
+        <ViewSurvey surveyId={viewSurveyId} onBack={handleBackToSurveyFilters} />
       ) : (
-        // Show the survey filters and table
         <section className={styles.filterSection} aria-label="Survey filters">
           <div className={styles.header}>
             <h2 className={styles.pageTitle}>SURVEY MANAGEMENT</h2>
@@ -78,7 +82,7 @@ export const SurveyFilters = () => {
               aria-label="Add new survey"
               onClick={handleAddSurvey}
             >
-              + Add Survey
+              + Create New Survey
             </button>
           </div>
 
@@ -137,7 +141,7 @@ export const SurveyFilters = () => {
 
           {/* Tab Content */}
           <div>
-            {activeTab === 'existing' && <SurveyTable />}
+            {activeTab === 'existing' && <SurveyTable onView={setViewSurveyId} />}
             {activeTab === 'pending' && <PendingSurvey />}
           </div>
         </section>

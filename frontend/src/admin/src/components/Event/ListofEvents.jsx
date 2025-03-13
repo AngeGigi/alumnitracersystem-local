@@ -11,7 +11,7 @@ export const ListOfEvents = ({ events }) => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("https://localhost:5050/event/list");
+      const response = await fetch("http://alumnitracersystem.onrender.com/event/list");
       if (response.ok) {
         const data = await response.json();
         setEventList(data);
@@ -34,7 +34,7 @@ export const ListOfEvents = ({ events }) => {
     }
   
     try {
-      const response = await fetch(`https://localhost:5050/event/delete/${eventId}`, {
+      const response = await fetch(`http://alumnitracersystem.onrender.com/event/delete/${eventId}`, {
         method: "DELETE",
       });
   
@@ -62,7 +62,7 @@ export const ListOfEvents = ({ events }) => {
           <div key={event._id} className={styles.eventBox}>
             {event.image && (
               <img
-                src={`https://localhost:5050/uploads/${event.image}`}
+                src={`http://alumnitracersystem.onrender.com/uploads/${event.image}`}
                 alt={event.title}
                 className={styles.eventImage}
                 onClick={() => handleEventClick(event)}
@@ -102,7 +102,7 @@ export const ListOfEvents = ({ events }) => {
             </button>
             {selectedEvent.image && (
               <img
-                src={`http://localhost:5050/uploads/${selectedEvent.image}`}
+                src={`http://alumnitracersystem.onrender.com/uploads/${selectedEvent.image}`}
                 alt={selectedEvent.title}
                 className={styles.modalEventImage}
               />

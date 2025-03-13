@@ -14,7 +14,7 @@ export default function NewsArticles() {
   // Fetch articles
   const fetchArticles = async () => {
     try {
-      const response = await fetch("https://localhost:5050/artcileroutes/");
+      const response = await fetch("http://alumnitracersystem.onrender.com/artcileroutes/");
       const data = await response.json();
       setArticles(data);
     } catch (error) {
@@ -39,8 +39,8 @@ export default function NewsArticles() {
 
     try {
       const url = editId
-        ? `https://localhost:5050/artcileroutes/update/${editId}`
-        : "https://localhost:5050/artcileroutes/add";
+        ? `http://alumnitracersystem.onrender.com/artcileroutes/update/${editId}`
+        : "http://alumnitracersystem.onrender.com/artcileroutes/add";
       const method = editId ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -69,7 +69,7 @@ export default function NewsArticles() {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `https://localhost:5050/artcileroutes/delete/${id}`,
+        `http://alumnitracersystem.onrender.com/artcileroutes/delete/${id}`,
         {
           method: "DELETE",
         }
@@ -128,7 +128,7 @@ export default function NewsArticles() {
             <h3>{article.title}</h3>
             {article.image && (
                 <img
-                src={`https://localhost:5050${article.image}`}
+                src={`http://alumnitracersystem.onrender.com${article.image}`}
                 alt={article.title}
                 className={styles.articleImage}
                 />
@@ -215,7 +215,7 @@ export default function NewsArticles() {
             <h2>{selectedArticle.title}</h2>
             {selectedArticle.image && (
                 <img
-                src={`https://localhost:5050${selectedArticle.image}`}
+                src={`http://alumnitracersystem.onrender.com${selectedArticle.image}`}
                 alt={selectedArticle.title}
                 className={styles.fullArticleImage}
                 />

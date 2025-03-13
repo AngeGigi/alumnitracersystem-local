@@ -1,0 +1,151 @@
+/* Survey View Container */
+.viewSurvey {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Back Button */
+.backButton {
+  background-color: #c31d3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.backButton:hover {
+  background-color: #85152a;
+}
+
+/* Logo Section */
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+}
+
+/* Survey Details */
+.viewTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Questions Section */
+.questionsTitle {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Question Box */
+.questionBox {
+  background: #f8f8f8;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-left: 5px solid #c31d3c;
+  text-align: left;
+}
+
+/* Question Text */
+.questionText {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+/* Input for Short Answer */
+.textInput {
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Option List */
+.optionsList {
+  list-style: none;
+  padding: 0;
+}
+
+/* Individual Options */
+.optionsList li {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  transition: background 0.3s ease;
+}
+
+.optionsList li:hover {
+  background: #f0f0f0;
+}
+
+/* Option Label */
+.optionLabels {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Radio and Checkbox Inputs */
+.optionLabels input {
+  cursor: pointer;
+}
+
+/* Loading Text */
+.loading {
+  font-size: 16px;
+  color: #777;
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .viewSurvey {
+    padding: 15px;
+  }
+
+  .textInput {
+    font-size: 14px;
+  }
+
+  .optionsList li {
+    font-size: 14px;
+  }
+
+  .optionLabel {
+    font-size: 14px;
+  }
+}
