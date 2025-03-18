@@ -46,7 +46,7 @@ function ProfilePage() {
           return;
         }
 
-        const response = await fetch('https://alumnitracersystem.onrender.com/profile/user-profile', {
+        const response = await fetch('https://localhost:5050/profile/user-profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

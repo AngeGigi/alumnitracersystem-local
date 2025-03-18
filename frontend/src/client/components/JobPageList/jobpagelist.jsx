@@ -32,7 +32,7 @@ function JobListMainPage() {
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          "https://alumnitracersystem.onrender.com/jobs/jobpost?status=Published",
+          "https://localhost:5050/jobs/jobpost?status=Published",
           {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           }
@@ -53,7 +53,7 @@ function JobListMainPage() {
 
     try {
       const response = await axios.post(
-        `https://alumnitracersystem.onrender.com/jobs/${jobId}/comments`,
+        `https://localhost:5050/jobs/${jobId}/comments`,
         { comment: newComment },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

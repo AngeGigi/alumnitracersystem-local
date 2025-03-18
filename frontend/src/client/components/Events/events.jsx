@@ -24,7 +24,7 @@ function EventMainPage() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("https://alumnitracersystem.onrender.com/event/list"); // Adjust URL if needed
+      const response = await fetch("https://localhost:5050/event/list"); // Adjust URL if needed
       if (response.ok) {
         const data = await response.json();
         setEvents(data);
@@ -84,7 +84,7 @@ function EventMainPage() {
             </span>
             {selectedEvent.image && (
               <img
-                src={`https://alumnitracersystem.onrender.com/uploads/${selectedEvent.image}`}
+                src={`https://localhost:5050/uploads/${selectedEvent.image}`}
                 alt={selectedEvent.title}
                 className={styles.eventPoster}
               />

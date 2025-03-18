@@ -8,7 +8,7 @@ function ArticleClient() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch("https://alumnitracersystem.onrender.com/artcileroutes/");
+        const response = await fetch("https://localhost:5050/artcileroutes/");
         if (!response.ok) {
           throw new Error("Failed to fetch news");
         }
@@ -48,7 +48,7 @@ function ArticleClient() {
               onClick={() => openArticleModal(item)}
             >
               <img
-                src={`https://alumnitracersystem.onrender.com${item.image}`}
+                src={`https://localhost:5050${item.image}`}
                 alt={item.title}
                 className={styles.articleImage}
               />
@@ -73,7 +73,7 @@ function ArticleClient() {
             </button>
             <h2>{selectedArticle.title}</h2>
             <img
-              src={`https://alumnitracersystem.onrender.com${selectedArticle.image}`}
+              src={`https://localhost:5050${selectedArticle.image}`}
               alt={selectedArticle.title}
               className={styles.fullArticleImage}
             />

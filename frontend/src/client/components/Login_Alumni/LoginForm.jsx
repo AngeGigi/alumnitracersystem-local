@@ -15,7 +15,7 @@ const TestLoginForm = ({ closeModal }) => {
     console.log('Login attempt with:', formData); // Debug log
 
     try {
-      const response = await fetch('https://alumnitracersystem.onrender.com/record/login', {
+      const response = await fetch('https://localhost:5050/record/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

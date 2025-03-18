@@ -11,7 +11,7 @@ export default function DashboardCards() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const baseURL = "https://alumnitracersystem.onrender.com/dashboard"; // Change this in production
+        const baseURL = "https://localhost:5050/dashboard"; // Change this in production
         const responses = await Promise.all([
           fetch(`${baseURL}/total-alumni`),
           fetch(`${baseURL}/employed-alumni`),

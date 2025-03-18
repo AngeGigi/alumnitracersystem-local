@@ -15,7 +15,7 @@ export const EvenTabs = () => {
   
     const fetchEvents = async () => {
       try {
-        const response = await fetch("https://alumnitracersystem.onrender.com/event/list");
+        const response = await fetch("https://localhost:5050/event/list");
         if (response.ok) {
           const data = await response.json();
           setEvents(data);
